@@ -1,0 +1,32 @@
+serial_connection_timeout_ms: 500
+list_only: false
+skip_ports:
+  - /dev/ttyACM6
+  - /dev/ttyACM7
+  - /dev/ttyACM8
+devices:
+  - baudrate: 113200
+    manufacturer: "Texas Instruments"
+    product: "MSP430 Launchpad"
+    serial_number: "123456789"
+    vendor_id: 2047
+    product_id: 1017
+    serial_identification_command: "*IDN?"
+    serial_identification_command_expected_response: "Texas Instruments,MSP430,123456789,1.0.0"
+
+  - manufacturer: "Keysight Technologies"
+    product: "E3631A Power Supply"
+    serial_number: "1234567"
+    vendor_id: 10893
+    product_id: 12033
+
+  - baudrate: 9600
+    serial_number: "123456789000"
+    serial_identification_command: "i\n"
+    serial_identification_command_expected_response: "#mycustomarduino#"
+    serial_commands_after_identification:
+      - "R\n"
+    system_commands_after_identification:
+      - "dfu-util -a 0 -d 2341:0069 -S 123456789000 --detach"
+      - "dfu-util -a 0 -d 2341:0069 -D ~/firmware.bin -S 123456789000"
+      - "dfu-util -a 0 -d 2341:0069 -S 123456789000 --detach"
